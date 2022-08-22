@@ -23,7 +23,7 @@ class Product {
     @required this.colors,
     @required this.sizes,
     @required this.reviews,
-    @required this.storeName,
+    @required this.storeName, photo, nom,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {

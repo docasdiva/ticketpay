@@ -1,6 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:marketky/constant/app_color.dart';
 import 'package:marketky/core/model/Product.dart';
@@ -9,14 +9,14 @@ import 'package:marketky/views/widgets/item_card.dart';
 
 class SearchResultPage extends StatefulWidget {
   final String searchKeyword;
-  SearchResultPage({@required this.searchKeyword});
+  SearchResultPage({this.searchKeyword});
 
   @override
   _SearchResultPageState createState() => _SearchResultPageState();
 }
 
 class _SearchResultPageState extends State<SearchResultPage> with TickerProviderStateMixin {
-  TabController tabController;
+   TabController tabController;
   TextEditingController searchInputController = TextEditingController();
   List<Product> searchedProductData = ProductService.searchedProductData;
   @override
@@ -146,4 +146,4 @@ class _SearchResultPageState extends State<SearchResultPage> with TickerProvider
       ),
     );
   }
-}
+}*/

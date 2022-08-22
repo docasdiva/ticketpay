@@ -1,17 +1,23 @@
+//import 'dart:html';
+//import 'dart:convert';
+//import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:marketky/constant/app_color.dart';
 import 'package:marketky/core/model/Category.dart';
 import 'package:marketky/core/model/Product.dart';
+//import 'package:marketky/core/model/Event.dart';
+//import 'package:marketky/core/model/Product.dart';
 import 'package:marketky/core/services/CategoryService.dart';
 import 'package:marketky/core/services/ProductService.dart';
+//import 'package:marketky/core/services/ProductService.dart';
+import 'package:marketky/models/my_event.dart';
 import 'package:marketky/views/screens/empty_cart_page.dart';
-//import 'package:marketky/views/screens/message_page.dart';
-import 'package:marketky/views/screens/search_page.dart';
-import 'package:marketky/views/widgets/category_card.dart';
 import 'package:marketky/views/widgets/custom_icon_button_widget.dart';
 import 'package:marketky/views/widgets/dummy_search_widget_1.dart';
 import 'package:marketky/views/widgets/item_card.dart';
+//import 'package:marketky/views/widgets/item_card.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,6 +27,23 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Category> categoryData = CategoryService.categoryData;
   List<Product> productData = ProductService.productData;
+  List<MyEvent> events = [];
+
+  getEvent() async {
+    events = await MyEvent.FetchEventData();
+    MyEvent.FetchEventData().then((events) {
+      setState(() {
+        this.events = events;
+      });
+    });
+    print(events.toString());
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getEvent();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +86,8 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           CustomIconButtonWidget(
                             onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmptyCartPage()));
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => EmptyCartPage()));
                             },
                             value: 0,
                             icon: SvgPicture.asset(
@@ -71,7 +95,6 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.white,
                             ),
                           ),
-                         
                         ],
                       ),
                     ],
@@ -81,8 +104,8 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => SearchPage(),
-                      ),
+                          //builder: (context) => SearchPage(),
+                          ),
                     );
                   },
                 ),
@@ -90,7 +113,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           // Section 2 - category
-          Container(
+        /*  Container(
             width: MediaQuery.of(context).size.width,
             color: AppColor.secondary,
             padding: EdgeInsets.only(top: 12, bottom: 24),
@@ -105,13 +128,18 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Text(
                         'Categorie',
-                        style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
                       ),
                       TextButton(
                         onPressed: () {},
                         child: Text(
                           'Voir plus',
-                          style: TextStyle(color: Colors.white.withOpacity(0.7), fontWeight: FontWeight.w400),
+                          style: TextStyle(
+                              color: Colors.white.withOpacity(0.7),
+                              fontWeight: FontWeight.w400),
                         ),
                         style: TextButton.styleFrom(
                           primary: Colors.white,
@@ -121,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 // Category list
-                Container(
+Container(
                   margin: EdgeInsets.only(top: 12),
                   height: 96,
                   child: ListView.separated(
@@ -145,25 +173,27 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           // Section 3 - banner
-          // Container(
-          //   height: 106,
-          //   padding: EdgeInsets.symmetric(vertical: 16),
-          //   child: ListView.separated(
-          //     padding: EdgeInsets.symmetric(horizontal: 16),
-          //     scrollDirection: Axis.horizontal,
-          //     itemCount: 3,
-          //     separatorBuilder: (context, index) {
-          //       return SizedBox(width: 16);
-          //     },
-          //     itemBuilder: (context, index) {
-          //       return Container(
-          //         width: 230,
-          //         height: 106,
-          //         decoration: BoxDecoration(color: AppColor.primarySoft, borderRadius: BorderRadius.circular(15)),
-          //       );
-          //     },
-          //   ),
-          // ),
+          Container(
+            height: 106,
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: ListView.separated(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              scrollDirection: Axis.horizontal,
+              itemCount: 3,
+              separatorBuilder: (context, index) {
+                return SizedBox(width: 16);
+              },
+              itemBuilder: (context, index) {
+                return Container(
+                  width: 230,
+                  height: 106,
+                  decoration: BoxDecoration(
+                      color: AppColor.primarySoft,
+                      borderRadius: BorderRadius.circular(15)),
+                );
+              },
+            ),
+          ),*/
 
           // Section 4 - product list
 
@@ -171,23 +201,26 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.only(left: 16, top: 16),
             child: Text(
               ' recommandations...',
-              style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.w400),
+              style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400),
             ),
           ),
 
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Wrap(
-              spacing: 16,
-              runSpacing: 16,
-              children: List.generate(
-                productData.length,
-                (index) => ItemCard(
-                  product: productData[index],
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Wrap(
+                spacing: 16,
+                runSpacing: 16,
+                children: List.generate(
+                  
+                  events.length,
+                  (index) => EvItemCard(
+                    myEvent: events[index],
+                  ),
                 ),
-              ),
-            ),
-          )
+              ))
         ],
       ),
     );

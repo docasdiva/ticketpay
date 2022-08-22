@@ -36,7 +36,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Payer vos tickets en \nquelques secondes ici',
+                  'Payer vos tickets en \nquelques minutes ici',
                   style: TextStyle(color: AppColor.secondary.withOpacity(0.7), fontSize: 16),
                   textAlign: TextAlign.center,
                 ),

@@ -50,7 +50,9 @@ class _AddToCartModalState extends State<AddToCartModal> {
               Row(
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      
+                    },
                     child: Icon(Icons.remove, size: 20, color: Colors.black),
                     style: ElevatedButton.styleFrom(
                       shape: CircleBorder(),

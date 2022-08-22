@@ -14,11 +14,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final url = "http://192.168.137.1:8000/api/user/dorcas";
-  final _formKey = GlobalKey<FormState>();
+  final url = "http://192.168.100.62:8000/api/user/dorcas";
+  final formKey = GlobalKey<FormState>();
   String errorPassword;
   String errorEmail;
-  User user = User("", "", "");
+  User user = User("","", "","");
 
   TextEditingController ctrl1 = TextEditingController();
   TextEditingController ctrl2 = TextEditingController();

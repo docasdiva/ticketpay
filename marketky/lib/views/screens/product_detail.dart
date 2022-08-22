@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+//import 'package:http/http.dart';
 import 'package:marketky/constant/app_color.dart';
-import 'package:marketky/core/model/Product.dart';
-import 'package:marketky/views/screens/image_viewer.dart';
+//import 'package:marketky/core/model/Product.dart';
+import 'package:marketky/models/my_event.dart';
+//import 'package:marketky/views/screens/image_viewer.dart';
 import 'package:marketky/views/widgets/custom_app_bar.dart';
 import 'package:marketky/views/widgets/modals/add_to_cart_modal.dart';
-import 'package:marketky/views/widgets/rating_tag.dart';
-import 'package:marketky/views/widgets/selectable_circle_color.dart';
-import 'package:marketky/views/widgets/selectable_circle_size.dart';
-import 'package:pecahan_rupiah/pecahan_rupiah.dart';
+//import 'package:marketky/views/widgets/rating_tag.dart';
+//import 'package:marketky/views/widgets/selectable_circle_color.dart';
+//import 'package:marketky/views/widgets/selectable_circle_size.dart';
+//import 'package:pecahan_rupiah/pecahan_rupiah.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import 'image_viewer.dart';
+
 class ProductDetail extends StatefulWidget {
-  final Product product;
-  ProductDetail({@required this.product});
+  final MyEvent ev_ev;
+  ProductDetail({@required this.ev_ev});
 
   @override
   _ProductDetailState createState() => _ProductDetailState();
@@ -23,7 +27,7 @@ class _ProductDetailState extends State<ProductDetail> {
   PageController productImageSlider = PageController();
   @override
   Widget build(BuildContext context) {
-    Product product = widget.product;
+    MyEvent event_ee = widget.ev_ev;
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
@@ -45,11 +49,13 @@ class _ProductDetailState extends State<ProductDetail> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: AppColor.secondary,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
                   elevation: 0,
                 ),
                 onPressed: () {},
-                child: SvgPicture.asset('assets/icons/Chat.svg', color: Colors.white),
+                child: SvgPicture.asset('assets/icons/Chat.svg',
+                    color: Colors.white),
               ),
             ),
             Expanded(
@@ -58,7 +64,8 @@ class _ProductDetailState extends State<ProductDetail> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: AppColor.primary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
                     elevation: 0,
                   ),
                   onPressed: () {
@@ -72,7 +79,11 @@ class _ProductDetailState extends State<ProductDetail> {
                   },
                   child: Text(
                     'Ajouter au panier',
-                    style: TextStyle(fontFamily: 'poppins', fontWeight: FontWeight.w600, color: Colors.white, fontSize: 16),
+                    style: TextStyle(
+                        fontFamily: 'poppins',
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 16),
                   ),
                 ),
               ),
@@ -93,8 +104,8 @@ class _ProductDetailState extends State<ProductDetail> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => ImageViewer(imageUrl: product.image),
-                    ),
+                        // builder: (context) => ImageViewer(imageUrl:"/" ),
+                        ),
                   );
                 },
                 child: Container(
@@ -105,9 +116,9 @@ class _ProductDetailState extends State<ProductDetail> {
                     physics: BouncingScrollPhysics(),
                     controller: productImageSlider,
                     children: List.generate(
-                      product.image.length,
+                      event_ee.photo.length,
                       (index) => Image.asset(
-                        product.image[index],
+                        event_ee.photo[index],
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -116,7 +127,7 @@ class _ProductDetailState extends State<ProductDetail> {
               ),
               // appbar
               CustomAppBar(
-                title: '${product.storeName}',
+                title: '${event_ee.desc}',
                 leftIcon: SvgPicture.asset('assets/icons/Arrow-left.svg'),
                 rightIcon: SvgPicture.asset(
                   'assets/icons/Bookmark.svg',
@@ -132,7 +143,7 @@ class _ProductDetailState extends State<ProductDetail> {
                 bottom: 16,
                 child: SmoothPageIndicator(
                   controller: productImageSlider,
-                  count: product.image.length,
+                  count: event_ee.photo.length,
                   effect: ExpandingDotsEffect(
                     dotColor: AppColor.primary.withOpacity(0.2),
                     activeDotColor: AppColor.primary.withOpacity(0.2),
@@ -158,28 +169,37 @@ class _ProductDetailState extends State<ProductDetail> {
                     children: [
                       Expanded(
                         child: Text(
-                          product.name,
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, fontFamily: 'poppins', color: AppColor.secondary),
+                          event_ee.nom,
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'poppins',
+                              color: AppColor.secondary),
                         ),
                       ),
-                      RatingTag(
+                      /*  RatingTag(
                         margin: EdgeInsets.only(left: 10),
-                        value: product.rating,
-                      ),
+                        value: event.rating,
+                      ),*/
                     ],
                   ),
                 ),
-                Container(
+                /*Container(
                   margin: EdgeInsets.only(bottom: 14),
                   child: Text(
-                    '${Pecahan.rupiah(value: product.price, withRp: true)}',
+                    '${Pecahan.rupiah(value: MyEvent.price, withRp: true)}',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, fontFamily: 'poppins', color: AppColor.primary),
                   ),
-                ),
-                Text(
-                  //description
-                  'Bringing a new look to the Waffle sneaker family, the Nike Waffle One balances everything you love about heritage Nike running with fresh innovations.',
-                  style: TextStyle(color: AppColor.secondary.withOpacity(0.7), height: 150 / 100),
+                ),*/
+                Expanded(
+                  child: Text(
+                    event_ee.desc,
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: 'poppins',
+                        color: AppColor.secondary),
+                  ),
                 ),
               ],
             ),
@@ -202,16 +222,16 @@ class _ProductDetailState extends State<ProductDetail> {
                     fontFamily: 'poppins',
                   ),
                 ),
-                SelectableCircleColor(
-                  colorWay: product.colors,
+                /*SelectableCircleColor(
+                  colorWay: event.colors,
                   margin: EdgeInsets.only(top: 12),
-                ),
+                ),*/
               ],
             ),
           ),
 
           // Section 4 - Size Picker
-          Container(
+          /* Container(
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.symmetric(horizontal: 16),
             margin: EdgeInsets.only(bottom: 20),
@@ -235,7 +255,7 @@ class _ProductDetailState extends State<ProductDetail> {
               ],
             ),
           ),
-
+*/
           // Section 5 - Reviews
         ],
       ),

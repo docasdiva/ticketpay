@@ -1,6 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:marketky/constant/app_color.dart';
 import 'package:marketky/core/model/Search.dart';
@@ -141,4 +141,4 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
-}
+}*/
